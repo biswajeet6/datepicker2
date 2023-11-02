@@ -1,0 +1,8 @@
+NAME: original_order_id
+
+const index = steps.getRechargeAddress.$return_value.address?.cart_attributes?.findIndex(prop => prop.name === '_original_order_id')
+console.log(index)
+if (index < 0) {  
+  $end('Error with address attribute missing')
+}
+return steps.getRechargeAddress.$return_value.address.cart_attributes[index].value

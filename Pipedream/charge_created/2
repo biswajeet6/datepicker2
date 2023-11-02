@@ -1,0 +1,154 @@
+NAME: nodejs
+NOTE: [APP-URL] - will need setting up e.g. https://datepicker-cutter-production.XXXXXX.com
+
+const { default: fetch } = await import('node-fetch')
+import axios from "axios";
+import axiosRetry from "axios-retry";
+
+const rechargeAccessToken = `${auths.recharge.api_key}`
+const headers = {
+  "content-type": "application/json",
+  "X-Recharge-Access-Token": rechargeAccessToken
+}
+// console.log('headers: ' + JSON.stringify(headers));
+let payload =  steps.trigger.event.body.charge;
+if (payload.type === 'CHECKOUT') {
+  // not supported in Shopify Checkout
+  // as in these changes won't end up in Shopify
+  // but they do update in Recharge and we can then reference them
+  const date_headers = {
+    "content-type": "application/json",
+    "x-shopify-shop-domain": "tco-demo-01.myshopify.com"
+  }
+  const shipping_name = await fetch(`[APP-URL]/api/getShippingNames`,
+  {
+      method: "POST",
+      body: JSON.stringify( {
+        "bb-code": payload.shipping_lines[0].code.toString()
+      }),
+      headers: date_headers
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){ return data;})
+  .catch(function(res){ console.log("Date Picker Error Fool",res) })
+  // console.log(shipping_name.rateName)
+
+  const dataUpdate = {
+    note_attributes: [{"name": "_original_order_id", "value": payload.shopify_order_id}],
+    order_attributes: [{"name": "_original_order_id", "value": payload.shopify_order_id}],
+    shipping_lines_override: [{
+      "code": payload.shipping_lines[0].code,
+      "title": shipping_name.rateName,
+      "price": payload.shipping_lines[0].price
+    }]
+  }
+  console.log('dataUpdate: ' + JSON.stringify(dataUpdate));
+
+  const ax = axios.create();
+  axiosRetry(ax, { 
+    retries: 5,
+    retryDelay: (retryCount) => {
+      console.log(`retry attempt: ${retryCount}`);
+      return retryCount * 2000; // time interval between retries
+    },
+    retryCondition: (error) => {
+      // if retry condition is not specified, by default idempotent requests are retried
+      return error.response.status === 409;
+    }
+  });
+  await ax.put(`https://api.rechargeapps.com/addresses/${payload.address_id}`,
+    dataUpdate,
+    {headers: headers}
+  )
+  .then(function(res){ console.log(JSON.stringify(res.data)); return res.data; })
+  .catch(function(err){ console.log("Error Fool", err.response.status, err.data) })
+  return {data: {
+    'order_id': payload.shopify_order_id,
+    'shipping_name': shipping_name.rateName
+  }}
+} else {
+// var subscription_id = [];
+// let item = '';
+// let shipping_date = '';
+let future_shipping_date = '';
+// let update_line_items = [];
+let updated_date;
+// let index_date;
+
+//Loop through lineItem properties.
+const processLinItemSubscription = async (item,index) => {
+    // subscription_id.push(item.subscription_id)
+    //subscription_id = item.subscription_id
+    console.log(`Item ${index + 1}: `, item.subscription_id)
+    console.log('LineItem Properties ', item.properties)
+  
+    //Need to loop over the line_item properties for the delivery date
+    const index_date = item?.properties ? item.properties.findIndex(prop => prop.name === '_nominated_date') : -1
+    // const index_date = item.properties.findIndex(prop => prop.name === '_nominated_date')
+    // index_date = indexToFind
+
+    console.log(`shipping date for item ${index + 1} ` + item.properties[index_date].value);
+    
+    if(index_date !== -1 && !updated_date) {
+      // get the subscription frequency from recharge
+      const getSub = await fetch(`https://api.rechargeapps.com/subscriptions/${item.subscription_id}`,
+        {
+            method: "GET",
+            headers: headers
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ return data; })
+        .catch(function(res){ console.log("Error Get Sub",res) })
+      const freq_num = getSub.subscription.order_interval_frequency; // 2
+      const freq_unit = getSub.subscription.order_interval_unit; // week
+
+      const date = Date.parse(item.properties[index_date].value)
+      // ensure the future date is 1 month ahead of the original
+      let future_shipping_date = new Date(date);
+      const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+      if (freq_unit === 'month') {
+        // +1 (or more) months, question if need to get this from ReCharge
+        future_shipping_date.setMonth(future_shipping_date.getMonth() + freq_num)
+      } else {      
+        // if day frequency or week frequency 
+        const day_muliplier = freq_unit === 'week' ? 7 : 1;
+        future_shipping_date.setDate(future_shipping_date.getDate() + freq_num * day_muliplier)
+      }
+      updated_date = new Date(future_shipping_date).toGMTString('en-GB', options);
+      
+      console.log('Future Shipping date 1: ' + updated_date)
+    }
+
+    //console.log("Index found " + index_date)
+
+    //update this item property
+    item.properties[index_date].value = updated_date;
+    // update_line_items.pop();
+    console.log('updated line items:' + JSON.stringify(item.properties))
+    // update the subscription properties
+    const cartProperties = {
+      "properties": item.properties
+    }
+    const updateSub = await fetch(`https://api.rechargeapps.com/subscriptions/${item.subscription_id}`,
+      {
+          method: "PUT",
+          body: JSON.stringify( cartProperties ),
+          headers: headers
+      })
+    const updateSubJson = await updateSub.json()
+    // console.log(updateSubJson)
+    if (updateSubJson?.subscription?.properties) {
+      console.log('The response', JSON.stringify(updateSubJson.subscription.properties))
+    } else {
+      console.log('Missing sub properties: ')
+      console.log(updateSubJson)
+    }
+    return item.subscription_id;
+  }
+  await payload.line_items.reduce( async (promiseIt, item, index) => {
+    await promiseIt.then(async () => await processLinItemSubscription(item, index).then(x => console.log(x)))
+  }, Promise.resolve(null))
+  console.log('after reduce')
+  
+  $end('Do not update Shopify Notes')
+}

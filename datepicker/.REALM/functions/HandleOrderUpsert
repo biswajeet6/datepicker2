@@ -1,0 +1,60 @@
+exports = async function (changeEvent) {
+  
+  const MAX_RETRIES = 10
+  
+  let success = true
+  let retry = false
+  
+  const mongo = context.services.get('mongodb-atlas')
+  
+  console.log(`Processing order: ${changeEvent.fullDocument._id}`)
+  
+  try {
+    const response = await context.http.post({
+      url: `${context.values.get('app_url')}/api/realm/handleOrderUpsert`,
+      body: { document_id: changeEvent.fullDocument._id },
+      encodeBodyAsJSON: true,
+      headers: {
+        'Authorization': [`Bearer: ${context.values.get('app_authentication_key')}`]
+      }
+    })
+    
+    const content = EJSON.parse(response.body.text())
+    
+    if (response.statusCode !== 200) {
+      success = false
+      
+      console.error(content.message)
+      
+      retry = content.retry
+    }
+  } catch (error) {
+    
+    // handle network level errors (@todo move to SQS)
+    console.error(error)
+    
+    await mongo.db(changeEvent.ns.db).collection(changeEvent.ns.coll).updateOne(
+      changeEvent.documentKey, 
+      { 
+        $set: {
+          internal_status: "network_error",
+          internal_message: error.message
+        }
+    })
+    success = false
+    retry = true
+  }
+  
+  console.log(`retry: ${retry}`)
+  
+  if (retry && changeEvent.fullDocument.internal_retry < MAX_RETRIES) {
+    await mongo.db(changeEvent.ns.db).collection(changeEvent.ns.coll).updateOne(
+      changeEvent.documentKey, 
+      { $inc: { internal_retry: 1 } }
+    )
+  }
+  
+  return {
+    success: success
+  }
+}

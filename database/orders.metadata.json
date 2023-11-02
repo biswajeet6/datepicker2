@@ -1,0 +1,1 @@
+{"options":{"changeStreamPreAndPostImages":{"enabled":true}},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"order_id":{"$numberInt":"1"},"store_id":{"$numberInt":"1"}},"name":"order_id_1_store_id_1_autocreated"}],"uuid":"d3d05bbfd57d49a0a4435aee28e6dee5","collectionName":"orders","type":"collection"}

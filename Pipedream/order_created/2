@@ -1,0 +1,8 @@
+NAME: getRechargeAddress
+
+return await require("@pipedream/platform").axios(this, {
+  url: `https://api.rechargeapps.com/addresses/${event.body.order.address_id}`,
+  headers: {
+    "X-Recharge-Access-Token": `${auths.recharge.api_key}`,
+  },
+})

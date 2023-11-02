@@ -1,0 +1,108 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@1.3.1
+
+jobs:
+  bootstrap-dependencies:
+    docker:
+      - image: cimg/node:12.16.1
+    working_directory: ~/date-selector-event-handlers
+    steps:
+      - checkout
+      - run:
+          name: npm-install
+          command: "npm install"
+      - save_cache:
+          key: dependency-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - node_modules
+  test-js:
+    docker:
+      - image: cimg/node:12.16.1
+    working_directory: ~/date-selector-event-handlers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: run-tests
+          command: 'npm run test'
+  build-deploy:
+    docker:
+      - image: cimg/node:12.16.1
+    working_directory: ~/date-selector-event-handlers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: sudo npm i -g serverless@2.72.2
+      - run:
+          name: Install PIP
+          command: sudo apt-get update && sudo apt-get install -y python-pip python-dev
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: Install
+          command: npm install
+      - run:
+          name: sync-local-serverless-configuration
+          command: node deploy/sync-templates.js local
+      - run:
+          name: deploy
+          command: serverless deploy --stage dev
+      - run:
+          name: sync-aws-serverless-configuration
+          command: node deploy/sync-templates.js aws
+
+workflows:
+
+  build-and-test:
+    jobs:
+      - bootstrap-dependencies:
+          filters:
+            branches:
+              only:
+                - main
+                - production
+
+      - test-js:
+          requires:
+            - bootstrap-dependencies
+          filters:
+            branches:
+              only:
+                - main
+                - production
+
+      # Cutter & Squidge Deployment (Staging & Live)
+      - build-deploy:
+          name: "build-deploy-cutter-staging"
+          context: date-selector-event-handlers-cutter-staging
+          filters:
+            branches:
+              only:
+                - main
+                - production
+          requires:
+            - test-js
+      - hold-deploy-cutter-live:
+          type: approval
+          requires:
+            - "build-deploy-cutter-staging"
+          filters:
+            branches:
+              only:
+                - production
+      - build-deploy:
+          name: "build-deploy-cutter-production"
+          context: date-selector-event-handlers-cutter-production
+          requires:
+            - hold-deploy-cutter-live
+          filters:
+            branches:
+              only:
+                - production

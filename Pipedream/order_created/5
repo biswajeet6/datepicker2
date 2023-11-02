@@ -1,0 +1,10 @@
+NAME: shopify_get_this_order
+
+return await require("@pipedreamhq/platform").axios(this, {
+  method: "get",
+  url: `https://${auths.shopify.shop_id}.myshopify.com/admin/api/2020-01/orders/${params.order_id}.json`,
+  headers: {
+    "X-Shopify-Access-Token": `${auths.shopify.oauth_access_token}`,
+    "Content-Type": `application/json`,
+  }
+})

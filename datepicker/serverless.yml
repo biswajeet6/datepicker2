@@ -1,0 +1,10 @@
+name: "${env.STAGE}"
+app:
+  component: "@sls-next/serverless-component@3.6.0"
+  inputs:
+    domain: [ "${env.STAGE}-date-picker", "[ENTER-DOMAIN-HERE].com" ]
+    bucketName: "${env.STAGE}"
+    useServerlessTraceTarget: true
+    name:
+      defaultLambda: appDefaultLambda
+      apiLambda: appApiLambda

@@ -1,0 +1,18 @@
+exports = async function () {
+  
+  const response = await context.http.post({
+    url: `${context.values.get('app_url')}/api/realm/cleanup`,
+    body: { },
+    encodeBodyAsJSON: true,
+    headers: {
+      'Authorization': [`Bearer: ${context.values.get('app_authentication_key')}`]
+    }
+  })
+  
+  if (response.statusCode !== 200) {
+    throw new Error(EJSON.parse(response.body.text()))
+  }
+  
+  return { success: true }
+  
+};

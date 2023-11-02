@@ -1,0 +1,16 @@
+const payload =  {
+  "address": "https://[123abc].m.pipedream.net",
+  "topic": "charge/created"
+};
+
+const headers = {
+  "content-type": "application/json",
+  "X-Recharge-Access-Token": rechargeAccessToken
+}
+
+return await fetch("https://api.rechargeapps.com/webhooks",
+{
+    method: "POST",
+    body: JSON.stringify( payload ),
+    headers: headers
+})

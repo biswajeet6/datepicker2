@@ -1,0 +1,613 @@
+{
+  "version": "0",
+  "id": "c79b4c9e-0c4a-62d4-dafb-3603f5d75afc",
+  "detail-type": "shopifyWebhook",
+  "source": "aws.partner/shopify.com/demo",
+  "account": "977846025308",
+  "time": "2021-03-17T14:48:37Z",
+  "region": "eu-west-2",
+  "resources": [],
+  "detail": {
+    "payload": {
+      "id": 3665459150987,
+      "email": "test@example.com",
+      "closed_at": null,
+      "created_at": "2021-03-17T14:48:33+00:00",
+      "updated_at": "2021-03-17T14:48:34+00:00",
+      "number": 249,
+      "note": "",
+      "token": "edf29de9d7d02be008ce0adf63e013eb",
+      "gateway": "manual",
+      "test": false,
+      "total_price": "744.00",
+      "subtotal_price": "744.00",
+      "total_weight": 0,
+      "total_tax": "124.00",
+      "taxes_included": true,
+      "currency": "GBP",
+      "financial_status": "paid",
+      "confirmed": true,
+      "total_discounts": "0.00",
+      "total_line_items_price": "744.00",
+      "cart_token": null,
+      "buyer_accepts_marketing": false,
+      "name": "#1249",
+      "referring_site": null,
+      "landing_site": null,
+      "cancelled_at": null,
+      "cancel_reason": null,
+      "total_price_usd": "1034.26",
+      "checkout_token": null,
+      "reference": null,
+      "user_id": 27582496839,
+      "location_id": null,
+      "source_identifier": null,
+      "source_url": null,
+      "processed_at": "2021-03-17T14:48:33+00:00",
+      "device_id": null,
+      "phone": null,
+      "customer_locale": "en",
+      "app_id": 1354745,
+      "browser_ip": null,
+      "landing_site_ref": null,
+      "order_number": 1249,
+      "discount_applications": [],
+      "discount_codes": [],
+      "note_attributes": [],
+      "payment_gateway_names": [
+        "manual"
+      ],
+      "processing_method": "manual",
+      "checkout_id": null,
+      "source_name": "shopify_draft_order",
+      "fulfillment_status": null,
+      "tax_lines": [
+        {
+          "price": "124.00",
+          "rate": 0.2,
+          "title": "GB VAT",
+          "price_set": {
+            "shop_money": {
+              "amount": "124.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "124.00",
+              "currency_code": "GBP"
+            }
+          }
+        }
+      ],
+      "tags": "ageCheckRequired, nominated_day_2021-03-18, urgent",
+      "contact_email": "test@example.com",
+      "order_status_url": "https://demo.myshopify.com/5531304007/orders/edf29de9d7d02be008ce0adf63e013eb/authenticate?key=926c73fc1ef6f41f7498bbc6fb5ffd7d",
+      "presentment_currency": "GBP",
+      "total_line_items_price_set": {
+        "shop_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        }
+      },
+      "total_discounts_set": {
+        "shop_money": {
+          "amount": "0.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "0.00",
+          "currency_code": "GBP"
+        }
+      },
+      "total_shipping_price_set": {
+        "shop_money": {
+          "amount": "0.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "0.00",
+          "currency_code": "GBP"
+        }
+      },
+      "subtotal_price_set": {
+        "shop_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        }
+      },
+      "total_price_set": {
+        "shop_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "744.00",
+          "currency_code": "GBP"
+        }
+      },
+      "total_tax_set": {
+        "shop_money": {
+          "amount": "124.00",
+          "currency_code": "GBP"
+        },
+        "presentment_money": {
+          "amount": "124.00",
+          "currency_code": "GBP"
+        }
+      },
+      "line_items": [
+        {
+          "id": 9643928191115,
+          "variant_id": 34326062170251,
+          "title": "Adidas Classic",
+          "quantity": 3,
+          "sku": "",
+          "variant_title": "Black",
+          "vendor": "demo",
+          "fulfillment_service": "manual",
+          "product_id": 5022407262347,
+          "requires_shipping": true,
+          "taxable": true,
+          "gift_card": false,
+          "name": "Adidas Classic - Black",
+          "variant_inventory_management": "shopify",
+          "properties": [],
+          "product_exists": true,
+          "fulfillable_quantity": 3,
+          "grams": 0,
+          "price": "50.00",
+          "total_discount": "0.00",
+          "fulfillment_status": null,
+          "pre_tax_price": "125.00",
+          "price_set": {
+            "shop_money": {
+              "amount": "50.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "50.00",
+              "currency_code": "GBP"
+            }
+          },
+          "pre_tax_price_set": {
+            "shop_money": {
+              "amount": "125.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "125.00",
+              "currency_code": "GBP"
+            }
+          },
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            }
+          },
+          "discount_allocations": [],
+          "duties": [],
+          "admin_graphql_api_id": "gid://shopify/LineItem/9643928191115",
+          "tax_lines": [
+            {
+              "title": "GB VAT",
+              "price": "25.00",
+              "rate": 0.2,
+              "price_set": {
+                "shop_money": {
+                  "amount": "25.00",
+                  "currency_code": "GBP"
+                },
+                "presentment_money": {
+                  "amount": "25.00",
+                  "currency_code": "GBP"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 9643928223883,
+          "variant_id": 34326062203019,
+          "title": "Adidas Classic",
+          "quantity": 5,
+          "sku": "",
+          "variant_title": "White",
+          "vendor": "demo",
+          "fulfillment_service": "manual",
+          "product_id": 5022407262347,
+          "requires_shipping": true,
+          "taxable": true,
+          "gift_card": false,
+          "name": "Adidas Classic - White",
+          "variant_inventory_management": "shopify",
+          "properties": [],
+          "product_exists": true,
+          "fulfillable_quantity": 5,
+          "grams": 0,
+          "price": "50.00",
+          "total_discount": "0.00",
+          "fulfillment_status": null,
+          "pre_tax_price": "208.33",
+          "price_set": {
+            "shop_money": {
+              "amount": "50.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "50.00",
+              "currency_code": "GBP"
+            }
+          },
+          "pre_tax_price_set": {
+            "shop_money": {
+              "amount": "208.33",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "208.33",
+              "currency_code": "GBP"
+            }
+          },
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            }
+          },
+          "discount_allocations": [],
+          "duties": [],
+          "admin_graphql_api_id": "gid://shopify/LineItem/9643928223883",
+          "tax_lines": [
+            {
+              "title": "GB VAT",
+              "price": "41.67",
+              "rate": 0.2,
+              "price_set": {
+                "shop_money": {
+                  "amount": "41.67",
+                  "currency_code": "GBP"
+                },
+                "presentment_money": {
+                  "amount": "41.67",
+                  "currency_code": "GBP"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 9643928256651,
+          "variant_id": 33923867738251,
+          "title": "Brew Box",
+          "quantity": 2,
+          "sku": "BREW-BREWERS",
+          "variant_title": "Brewers mix",
+          "vendor": "demo",
+          "fulfillment_service": "manual",
+          "product_id": 4941169459339,
+          "requires_shipping": true,
+          "taxable": true,
+          "gift_card": false,
+          "name": "Brew Box - Brewers mix",
+          "variant_inventory_management": "shopify",
+          "properties": [],
+          "product_exists": true,
+          "fulfillable_quantity": 2,
+          "grams": 0,
+          "price": "60.00",
+          "total_discount": "0.00",
+          "fulfillment_status": null,
+          "pre_tax_price": "100.00",
+          "price_set": {
+            "shop_money": {
+              "amount": "60.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "60.00",
+              "currency_code": "GBP"
+            }
+          },
+          "pre_tax_price_set": {
+            "shop_money": {
+              "amount": "100.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "100.00",
+              "currency_code": "GBP"
+            }
+          },
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            }
+          },
+          "discount_allocations": [],
+          "duties": [],
+          "admin_graphql_api_id": "gid://shopify/LineItem/9643928256651",
+          "tax_lines": [
+            {
+              "title": "GB VAT",
+              "price": "20.00",
+              "rate": 0.2,
+              "price_set": {
+                "shop_money": {
+                  "amount": "20.00",
+                  "currency_code": "GBP"
+                },
+                "presentment_money": {
+                  "amount": "20.00",
+                  "currency_code": "GBP"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 9643928289419,
+          "variant_id": 33923867705483,
+          "title": "Brew Box",
+          "quantity": 2,
+          "sku": "BREW-IPA",
+          "variant_title": "IPA",
+          "vendor": "demo",
+          "fulfillment_service": "manual",
+          "product_id": 4941169459339,
+          "requires_shipping": true,
+          "taxable": true,
+          "gift_card": false,
+          "name": "Brew Box - IPA",
+          "variant_inventory_management": "shopify",
+          "properties": [],
+          "product_exists": true,
+          "fulfillable_quantity": 2,
+          "grams": 0,
+          "price": "72.00",
+          "total_discount": "0.00",
+          "fulfillment_status": null,
+          "pre_tax_price": "120.00",
+          "price_set": {
+            "shop_money": {
+              "amount": "72.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "72.00",
+              "currency_code": "GBP"
+            }
+          },
+          "pre_tax_price_set": {
+            "shop_money": {
+              "amount": "120.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "120.00",
+              "currency_code": "GBP"
+            }
+          },
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            }
+          },
+          "discount_allocations": [],
+          "duties": [],
+          "admin_graphql_api_id": "gid://shopify/LineItem/9643928289419",
+          "tax_lines": [
+            {
+              "title": "GB VAT",
+              "price": "24.00",
+              "rate": 0.2,
+              "price_set": {
+                "shop_money": {
+                  "amount": "24.00",
+                  "currency_code": "GBP"
+                },
+                "presentment_money": {
+                  "amount": "24.00",
+                  "currency_code": "GBP"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": 9643928322187,
+          "variant_id": 33923867672715,
+          "title": "Brew Box",
+          "quantity": 1,
+          "sku": "BREW-MIXED",
+          "variant_title": "mixed",
+          "vendor": "demo",
+          "fulfillment_service": "manual",
+          "product_id": 4941169459339,
+          "requires_shipping": true,
+          "taxable": true,
+          "gift_card": false,
+          "name": "Brew Box - mixed",
+          "variant_inventory_management": "shopify",
+          "properties": [],
+          "product_exists": true,
+          "fulfillable_quantity": 1,
+          "grams": 0,
+          "price": "80.00",
+          "total_discount": "0.00",
+          "fulfillment_status": null,
+          "pre_tax_price": "66.67",
+          "price_set": {
+            "shop_money": {
+              "amount": "80.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "80.00",
+              "currency_code": "GBP"
+            }
+          },
+          "pre_tax_price_set": {
+            "shop_money": {
+              "amount": "66.67",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "66.67",
+              "currency_code": "GBP"
+            }
+          },
+          "total_discount_set": {
+            "shop_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            },
+            "presentment_money": {
+              "amount": "0.00",
+              "currency_code": "GBP"
+            }
+          },
+          "discount_allocations": [],
+          "duties": [],
+          "admin_graphql_api_id": "gid://shopify/LineItem/9643928322187",
+          "tax_lines": [
+            {
+              "title": "GB VAT",
+              "price": "13.33",
+              "rate": 0.2,
+              "price_set": {
+                "shop_money": {
+                  "amount": "13.33",
+                  "currency_code": "GBP"
+                },
+                "presentment_money": {
+                  "amount": "13.33",
+                  "currency_code": "GBP"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "fulfillments": [],
+      "refunds": [],
+      "total_tip_received": "0.0",
+      "original_total_duties_set": null,
+      "current_total_duties_set": null,
+      "admin_graphql_api_id": "gid://shopify/Order/3665459150987",
+      "shipping_lines": [],
+      "billing_address": {
+        "first_name": "Aidan",
+        "address1": "24 The Cooperage",
+        "phone": "+447837233564",
+        "city": "Frome",
+        "zip": "BA111JX",
+        "province": null,
+        "country": "United Kingdom",
+        "last_name": "Ayala",
+        "address2": null,
+        "company": null,
+        "latitude": 51.22570640000001,
+        "longitude": -2.3225022,
+        "name": "Aidan Ayala",
+        "country_code": "GB",
+        "province_code": null
+      },
+      "shipping_address": {
+        "first_name": "Aidan",
+        "address1": "24 The Cooperage",
+        "phone": "+447837233564",
+        "city": "Frome",
+        "zip": "BA111JX",
+        "province": null,
+        "country": "United Kingdom",
+        "last_name": "Ayala",
+        "address2": null,
+        "company": null,
+        "latitude": 51.22570640000001,
+        "longitude": -2.3225022,
+        "name": "Aidan Ayala",
+        "country_code": "GB",
+        "province_code": null
+      },
+      "customer": {
+        "id": 3665163616395,
+        "email": "test@example.com",
+        "accepts_marketing": false,
+        "created_at": "2020-08-19T14:59:08+01:00",
+        "updated_at": "2021-03-17T14:48:34+00:00",
+        "first_name": "Aidan",
+        "last_name": "Ayala",
+        "orders_count": 13,
+        "state": "disabled",
+        "total_spent": "3686.00",
+        "last_order_id": 3665459150987,
+        "note": "",
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": "+447837233564",
+        "tags": "ac_customer_verified",
+        "last_order_name": "#1249",
+        "currency": "GBP",
+        "accepts_marketing_updated_at": "2020-08-19T14:59:08+01:00",
+        "marketing_opt_in_level": null,
+        "admin_graphql_api_id": "gid://shopify/Customer/3665163616395",
+        "default_address": {
+          "id": 3687355220107,
+          "customer_id": 3665163616395,
+          "first_name": "Aidan",
+          "last_name": "Ayala",
+          "company": "",
+          "address1": "24 The Cooperage",
+          "address2": "",
+          "city": "Frome",
+          "province": "",
+          "country": "United Kingdom",
+          "zip": "BA111JX",
+          "phone": "+447837233564",
+          "name": "Aidan Ayala",
+          "province_code": null,
+          "country_code": "GB",
+          "country_name": "United Kingdom",
+          "default": true
+        }
+      }
+    },
+    "metadata": {
+      "Content-Type": "application/json",
+      "X-Shopify-Topic": "orders/create",
+      "X-Shopify-Shop-Domain": "demo.myshopify.com",
+      "X-Shopify-Order-Id": "3665459150987",
+      "X-Shopify-Test": "false",
+      "X-Shopify-Hmac-SHA256": "zSCFiWluS0L7Ll3UV3w1ODQTWlX3B6illkQt4U51IFY=",
+      "X-Shopify-Webhook-Id": "7fb827d5-2423-4068-87b0-a86d89642832",
+      "X-Shopify-API-Version": "2021-01"
+    }
+  }
+}

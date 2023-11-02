@@ -1,0 +1,32 @@
+NAME: shopify
+
+const data = {
+  "query": `mutation orderUpdate($input: OrderInput!) {
+    orderUpdate(input: $input) {
+      order {
+        id
+        note
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }`,
+  "variables": {
+    "input": {
+  	  "id": `gid://shopify/Order/${steps.nodejs.$return_value.data.order_id}`,
+      "note": `${steps.nodejs.$return_value.data.shipping_name}`
+    }
+  }
+}
+console.log(data)
+return await require("@pipedream/platform").axios(this, {
+  method: "post",
+  url: `https://${auths.shopify.shop_id}.myshopify.com/admin/api/2021-10/graphql.json`,
+  headers: {
+    "X-Shopify-Access-Token": `${auths.shopify.oauth_access_token}`,
+    "Content-Type": `application/json`,
+  },
+  data,
+})

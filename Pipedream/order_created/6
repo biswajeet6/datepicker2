@@ -1,0 +1,36 @@
+let currentCartAttributes = steps.shopify_get_this_order.$return_value.order.note_attributes;
+const newLineItemDateIndex = steps.shopify_get_this_order.$return_value.order.line_items[0].properties.findIndex(prop => prop.name === '_nominated_date');
+if (newLineItemDateIndex >= 0) {
+  const newLineItemDate = steps.shopify_get_this_order.$return_value.order.line_items[0].properties[newLineItemDateIndex].value;
+  const date = new Date(Date.parse(newLineItemDate))
+  const dateFormatted = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' }).split('/').reverse().join('/');
+  const currentCartAttributesDateIndex = currentCartAttributes.findIndex(prop => prop.name === '_nominated_date');
+  if (currentCartAttributesDateIndex !== -1) {
+    currentCartAttributes[currentCartAttributesDateIndex].value = newLineItemDate;
+  } else {
+    currentCartAttributes = [...currentCartAttributes, {"name":"_nominated_date","value": `${newLineItemDate}`}]
+  }
+  const currentCartAttributesDateFormatIndex = currentCartAttributes.findIndex(prop => prop.name === '_nominated_date_formatted');
+  if (currentCartAttributesDateFormatIndex !== -1) {
+    currentCartAttributes[currentCartAttributesDateFormatIndex].value = dateFormatted;
+  } else {
+    currentCartAttributes = [...currentCartAttributes, {"name":"_nominated_date_formatted","value": `${dateFormatted}`}]
+  }
+  currentCartAttributes = [...currentCartAttributes, {"name":"_orig_ship_code","value": `${steps.shopify_get_original_order.$return_value.order.shipping_lines[0].code}`}]
+}
+const thisOrderId = steps.shopify_get_this_order.$return_value.order.id
+
+return await require("@pipedream/platform").axios(this, {
+  method: "PUT",
+  url: `https://${auths.shopify.shop_id}.myshopify.com/admin/api/2022-01/orders/${thisOrderId}.json`,
+  headers: {
+    "X-Shopify-Access-Token": `${auths.shopify.oauth_access_token}`,
+    "Content-Type": `application/json`,
+  },
+  data: JSON.stringify({
+      order: {
+          id: thisOrderId.toString(),
+          note_attributes: currentCartAttributes
+      }
+  })
+})
