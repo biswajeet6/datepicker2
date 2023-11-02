@@ -16,7 +16,11 @@ const CustomLink: React.FC<CustomLinkProps> = ({children, url, ...rest}) => {
 
     return (
         <Link href={url}>
-            {children}
+            <a
+                {...rest}
+            >
+                {children}
+            </a>
         </Link>
     )
 
